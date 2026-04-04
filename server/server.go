@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/james/nexus-server/controllers/game_sessions"
 	"github.com/james/nexus-server/services/redis"
 )
 
@@ -14,11 +14,10 @@ func main() {
 		fmt.Println(err)
 	}
 	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	api := router.Group("/api")
+	{
+		game_sessions.RegisterRoutes(api)
+	}
 	err = router.Run()
 	if err != nil {
 		return

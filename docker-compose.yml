@@ -1,0 +1,41 @@
+services:
+
+  nexus_server:
+    build:
+      context: ./server
+    volumes:
+      - redis_data:/var/lib/redis_data
+      - postgres_data:/var/lib/postgres_data
+    depends_on:
+      - redis
+      - db
+
+  redis:
+    image: redis:7.4-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/var/lib/redis_data
+    command: redis-server
+  db:
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: nexus_database
+    volumes:
+      - postgres_data:/var/lib/postgres_data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d mydb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local

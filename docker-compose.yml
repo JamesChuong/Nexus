@@ -18,6 +18,7 @@ services:
     volumes:
       - redis_data:/var/lib/redis_data
     command: redis-server
+
   db:
     image: postgres:17-alpine
     restart: always

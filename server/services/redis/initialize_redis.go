@@ -36,10 +36,11 @@ func InitializeRedisIndexes() error {
 	}
 
 	playerSchema := []*redis.FieldSchema{
-		{FieldName: "playerId", FieldType: redis.SearchFieldTypeText},
+		{FieldName: "playerId", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "playerName", FieldType: redis.SearchFieldTypeText},
-		{FieldName: "status", FieldType: redis.SearchFieldTypeText},
-		{FieldName: "ipAddress", FieldType: redis.SearchFieldTypeText},
+		{FieldName: "status", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "ipAddress", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "gameSessionId", FieldType: redis.SearchFieldTypeTag},
 	}
 
 	err := createIndex(playerIndex, playerIndexOptions, playerSchema)
@@ -48,12 +49,22 @@ func InitializeRedisIndexes() error {
 		return err
 	}
 
-	//gameSessionIndex := "idx:game_session"
-	//
-	//gameSessionIndexOptions := &redis.FTCreateOptions{
-	//	OnJSON: false,
-	//	Prefix: []interface{}{"game_session:"},
-	//}
+	gameSessionIndex := "idx:game_session"
 
-	return nil
+	gameSessionIndexOptions := &redis.FTCreateOptions{
+		OnJSON: false,
+		Prefix: []interface{}{"game_session:"},
+	}
+
+	gameSessionSchema := []*redis.FieldSchema{
+		{FieldName: "host_id", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "status", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "transport", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "relay_id", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "max_players", FieldType: redis.SearchFieldTypeNumeric},
+	}
+
+	err = createIndex(gameSessionIndex, gameSessionIndexOptions, gameSessionSchema)
+
+	return err
 }

@@ -57,11 +57,11 @@ func InitializeRedisIndexes() error {
 	}
 
 	gameSessionSchema := []*redis.FieldSchema{
-		{FieldName: "host_id", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "hostId", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "status", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "transport", FieldType: redis.SearchFieldTypeTag},
-		{FieldName: "relay_id", FieldType: redis.SearchFieldTypeTag},
-		{FieldName: "max_players", FieldType: redis.SearchFieldTypeNumeric},
+		{FieldName: "relayId", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "maxPlayers", FieldType: redis.SearchFieldTypeNumeric},
 	}
 
 	err = createIndex(gameSessionIndex, gameSessionIndexOptions, gameSessionSchema)

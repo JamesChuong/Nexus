@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/james/nexus-server/controllers/game_sessions"
+	"github.com/james/nexus-server/services/db_service"
 	"github.com/james/nexus-server/services/redis_service"
 	"github.com/joho/godotenv"
 )
@@ -14,6 +15,12 @@ func init() {
 
 	if err != nil {
 		log.Fatal("No .env file found")
+	}
+
+	err = db_service.InitializeDB()
+
+	if err != nil {
+		log.Fatal("Database connection failed: " + err.Error())
 	}
 
 	// Initialize Redis indexes for searching

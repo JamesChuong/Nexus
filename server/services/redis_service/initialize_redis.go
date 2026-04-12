@@ -42,6 +42,7 @@ func InitializeRedisIndexes() error {
 		{FieldName: "status", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "ipAddress", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "gameSessionId", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "lastPing", FieldType: redis.SearchFieldTypeTag},
 	}
 
 	err := createIndex(playerIndex, playerIndexOptions, playerSchema)

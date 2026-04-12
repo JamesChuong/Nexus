@@ -5,4 +5,5 @@ type Player struct {
 	PlayerName string `json:"playerName"`
 	Status     string `json:"status"`
 	IPAddress  string `json:"ipAddress"`
+	LastPing   string `json:"lastPing"`
 }

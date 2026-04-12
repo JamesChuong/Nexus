@@ -28,7 +28,7 @@ services:
             - "${REDIS_PORT}:${REDIS_PORT}"
         volumes:
             - redis_data:/data
-        command: redis-server --appendonly yes
+        command: redis_service-server --appendonly yes
 
     db:
         image: postgres:17-alpine

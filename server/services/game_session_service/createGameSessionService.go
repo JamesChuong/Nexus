@@ -1,4 +1,4 @@
-package game_sessions
+package game_session_service
 
 import (
 	"github.com/james/nexus-server/services/redis_service"

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/james/nexus-server/services/game_sessions"
+	"github.com/james/nexus-server/services/game_session_service"
 	"github.com/james/nexus-server/types"
 )
 
@@ -13,7 +13,7 @@ func CreateGameSessionController(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&player)
 
-	game_session, err := game_sessions.CreateGameSessionService(player)
+	game_session, err := game_session_service.CreateGameSessionService(player)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

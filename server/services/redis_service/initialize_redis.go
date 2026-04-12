@@ -2,13 +2,14 @@ package redis_service
 
 import (
 	"context"
+	"os"
 
 	"github.com/redis/go-redis/v9"
 )
 
 var RedisClient = redis.NewClient(&redis.Options{
-	Addr:     "localhost:6379",
-	Password: "",
+	Addr:     os.Getenv("REDIS_ADDR"),
+	Password: os.Getenv("REDIS_PASSWORD"),
 	DB:       0,
 	Protocol: 2,
 })

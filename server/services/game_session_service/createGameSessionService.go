@@ -8,4 +8,5 @@ import (
 var redisClient = redis_service.RedisClient
 
 func CreateGameSessionService(player types.Player) (types.GameSession, error) {
+	return types.GameSession{}, nil
 }

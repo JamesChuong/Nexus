@@ -54,7 +54,7 @@ func CreateGameSessionService(player types.Player) (types.GameSession, error) {
 
 	sessionRedisKey := "game_session:" + gameSession.SessionId
 
-	if err := redis_service.SetRedisObject[types.GameSession](sessionRedisKey, gameSession, &gameSession); err != nil {
+	if err := redis_service.SetRedisObject[types.GameSession](sessionRedisKey, &gameSession); err != nil {
 		return types.GameSession{}, err
 	}
 

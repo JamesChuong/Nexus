@@ -52,7 +52,7 @@ func mapRedisObjectToStruct[T any](object map[string]string, returnType *T) (T, 
 	return *returnType, nil
 }
 
-func SetRedisObject[T any](key string, _ T, interfaceType *T) error {
+func SetRedisObject[T any](key string, interfaceType *T) error {
 	b, err := json.Marshal(interfaceType)
 	if err != nil {
 		return err

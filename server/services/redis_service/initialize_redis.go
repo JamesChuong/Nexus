@@ -41,7 +41,7 @@ func InitializeRedisIndexes() error {
 		{FieldName: "playerName", FieldType: redis.SearchFieldTypeText},
 		{FieldName: "status", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "ipAddress", FieldType: redis.SearchFieldTypeTag},
-		{FieldName: "gameSessionId", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "sessionId", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "lastPing", FieldType: redis.SearchFieldTypeTag},
 	}
 
@@ -62,8 +62,10 @@ func InitializeRedisIndexes() error {
 		{FieldName: "hostId", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "status", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "transport", FieldType: redis.SearchFieldTypeTag},
-		{FieldName: "relayId", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "sessionId", FieldType: redis.SearchFieldTypeTag},
 		{FieldName: "maxPlayers", FieldType: redis.SearchFieldTypeNumeric},
+		{FieldName: "createdAt", FieldType: redis.SearchFieldTypeTag},
+		{FieldName: "updatedAt", FieldType: redis.SearchFieldTypeTag},
 	}
 
 	err = createIndex(gameSessionIndex, gameSessionIndexOptions, gameSessionSchema)

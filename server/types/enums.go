@@ -8,14 +8,12 @@ type GameSessionStatus int
 
 const (
 	StatusActive GameSessionStatus = iota
-	StatusWaiting
 	StatusEnded
 )
 
 var gameSessionStatusNames = map[GameSessionStatus]string{
-	StatusActive:  "active",
-	StatusWaiting: "waiting",
-	StatusEnded:   "ended",
+	StatusActive: "active",
+	StatusEnded:  "ended",
 }
 
 func (s GameSessionStatus) String() string {

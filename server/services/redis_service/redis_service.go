@@ -7,7 +7,9 @@ import (
 	"github.com/goccy/go-json"
 )
 
-// Wrapper around the native FT.SEARCH function to handle marshaling to different types
+var ErrNoResult = errors.New("no result matches this query")
+
+// Wrapper functions around the native go-redis functions to handle marshaling to different types
 // The return type must be specified when called
 // Ex: Search[Player]('1234', '@PlayerName:test', @Status:connected') will return a Player object with name 'test' and status 'connected'
 
@@ -22,7 +24,7 @@ func Search[T any](index string, searchParams ...string) (any, error) {
 	}
 
 	if result.Total == 0 || len(result.Docs) == 0 {
-		return nil, errors.New("no result matches this query")
+		return nil, ErrNoResult
 	}
 
 	document := result.Docs[0].Fields
@@ -48,4 +50,22 @@ func mapRedisObjectToStruct[T any](object map[string]string, returnType *T) (T, 
 	}
 
 	return *returnType, nil
+}
+
+func SetRedisObject[T any](key string, _ T, interfaceType *T) error {
+	b, err := json.Marshal(interfaceType)
+	if err != nil {
+		return err
+	}
+
+	var fields map[string]interface{}
+	if err := json.Unmarshal(b, &fields); err != nil {
+		return err
+	}
+
+	if err := RedisClient.HSet(ctx, key, fields).Err(); err != nil {
+		return err
+	}
+
+	return nil
 }

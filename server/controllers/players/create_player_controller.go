@@ -2,13 +2,10 @@ package players
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/james/nexus-server/types"
+	"github.com/james/nexus-server/services/auth_service"
 	"github.com/james/nexus-server/services/players"
-	"time"
-	"github.com/kataras/jwt"
+	"github.com/james/nexus-server/types"
 )
-
-github.com/james/nexus-server/types"
 
 func CreatePlayerController(c *gin.Context) {
 
@@ -27,6 +24,10 @@ func CreatePlayerController(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 	}
 
-	c.JSON(200, gin.H{"player": player})
+	token, err := auth_service.CreateJWT(player)
 
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+	}
+	c.JSON(200, gin.H{"player": player, "token": token})
 }

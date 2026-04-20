@@ -11,8 +11,9 @@ var ErrNoResult = errors.New("no result matches this query")
 
 // Wrapper functions around the native go-redis functions to handle marshaling to different types
 // The return type must be specified when called
-// Ex: Search[Player]('1234', '@PlayerName:test', @Status:connected') will return a Player object with name 'test' and status 'connected'
 
+// Search performs a search query on the specified index with the given search parameters and returns the first matching result as the specified type
+// Ex: Search[types.Player]('1234', '@PlayerName:test', @Status:connected') will return a Player object with name 'test' and status 'connected'
 func Search[T any](index string, searchParams ...string) (any, error) {
 
 	query := strings.Join(searchParams, " ")
@@ -37,27 +38,14 @@ func Search[T any](index string, searchParams ...string) (any, error) {
 
 }
 
-func mapRedisObjectToStruct[T any](object map[string]string, returnType *T) (T, error) {
-	var zero T
-
-	b, err := json.Marshal(object)
-	if err != nil {
-		return zero, err
-	}
-
-	if err := json.Unmarshal(b, returnType); err != nil {
-		return zero, err
-	}
-
-	return *returnType, nil
-}
-
+// SetRedisObject Sets an object in Redis under a key
 func SetRedisObject[T any](key string, interfaceType *T) error {
 	b, err := json.Marshal(interfaceType)
 	if err != nil {
 		return err
 	}
 
+	// Convert JSON to map
 	var fields map[string]interface{}
 	if err := json.Unmarshal(b, &fields); err != nil {
 		return err

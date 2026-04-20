@@ -5,6 +5,6 @@ type Player struct {
 	PlayerName string `json:"playerName"`
 	Status     string `json:"status"`
 	IPAddress  string `json:"ipAddress"`
-	LastPing   string `json:"lastPing"`
+	LastPing   int64  `json:"lastPing"`
 	SessionId  string `json:"sessionId"`
 }

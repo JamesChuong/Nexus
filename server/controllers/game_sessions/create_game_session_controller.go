@@ -20,6 +20,6 @@ func CreateGameSessionController(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"game_session": gameSession, "message": "Game Session Created"})
+	c.JSON(http.StatusOK, gin.H{"game_session": gameSession})
 
 }

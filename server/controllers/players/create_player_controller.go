@@ -24,10 +24,12 @@ func CreatePlayerController(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 	}
 
-	token, err := auth_service.CreateJWT(player)
+	token, err := auth_service.CreateAccessToken(player)
+
+	refreshToken, err := auth_service.CreateRefreshToken(player)
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 	}
-	c.JSON(200, gin.H{"player": player, "token": token})
+	c.JSON(200, gin.H{"player": player, "access_token": token, "refresh_token": refreshToken})
 }

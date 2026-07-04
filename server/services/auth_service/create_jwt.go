@@ -10,8 +10,14 @@ import (
 
 var jwtKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 
-func CreateJWT(player types.Player) (string, error) {
+func CreateAccessToken(player types.Player) (string, error) {
 	token, err := jwt.Sign(jwt.HS256, jwtKey, player, jwt.MaxAge(15*time.Minute))
+
+	return string(token), err
+}
+
+func CreateRefreshToken(player types.Player) (string, error) {
+	token, err := jwt.Sign(jwt.HS256, jwtKey, player, jwt.MaxAge(7*24*time.Hour))
 
 	return string(token), err
 }
